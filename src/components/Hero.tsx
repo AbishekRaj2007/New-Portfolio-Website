@@ -79,13 +79,13 @@ export function Hero() {
           >
             <div>
               <div className="text-3xl font-display font-bold text-white mb-1">
-                <CountUp end={4} duration={3} />+
+                <CountUp end={2} duration={3} />+
               </div>
               <div className="text-sm text-muted-foreground">Years Exp.</div>
             </div>
             <div>
               <div className="text-3xl font-display font-bold text-white mb-1">
-                <CountUp end={30} duration={3} />+
+                <CountUp end={25} duration={3} />+
               </div>
               <div className="text-sm text-muted-foreground">Projects</div>
             </div>
@@ -116,16 +116,19 @@ export function Hero() {
               </div>
             </div>
             <div className="mt-16 p-6 font-mono text-sm leading-relaxed">
-              <p className="text-primary mb-2">$ init_project --stack="react node ai"</p>
-              <p className="text-muted-foreground mb-4">{">"} Loading dependencies...</p>
+              <p className="text-primary mb-2">$ hire --developer="ar" --skills="ml,fullstack,cloud"</p>
+              <p className="text-muted-foreground mb-4">{">"} validating skills...</p>
               
               <div className="space-y-2">
                 {[
-                  "[OK] System architecture designed",
-                  "[OK] Database schema initialized",
-                  "[OK] Frontend framework compiled",
-                  "[OK] AI models integrated",
-                  "[OK] Deploying to production...",
+                  "[OK] 500+ DSA problems solved",
+                  "[OK] Production-ready applications built",
+                  "[OK] AI systems engineered",
+                  "[OK] REST APIs architected",
+                  "[OK] Database schemas optimized",
+                  "[OK] Cloud deployments configured",
+                  "[OK] Git & CI/CD workflows automated",
+                  "[OK] Security best practices enforced",
                 ].map((line, i) => (
                   <motion.p
                     key={i}

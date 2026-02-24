@@ -32,7 +32,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a href="#" className="font-display font-bold text-2xl tracking-tighter text-white group">
-          JD<span className="text-primary transition-all duration-300 group-hover:text-neon">.</span>
+          AR<span className="text-primary transition-all duration-300 group-hover:text-neon">.</span>
         </a>
 
         {/* Desktop Nav */}
