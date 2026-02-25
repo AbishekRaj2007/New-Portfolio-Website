@@ -5,10 +5,11 @@ import { Hero } from "@/components/Hero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
+import { AchievementCard } from "@/components/AchievementCard";
 import { ContactForm } from "@/components/ContactForm";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ImageGallery } from "@/components/ImageGallery";
-import { useProjects, useExperiences } from "@/hooks/use-portfolio";
+import { useProjects, useExperiences, useAchievements } from "@/hooks/use-portfolio";
 import {
   SiJavascript, SiTypescript, SiReact, SiNextdotjs,
   SiNodedotjs, SiPython, SiPostgresql, SiTailwindcss,
@@ -88,10 +89,12 @@ const FALLBACK_EXPERIENCES = [
 export default function Home() {
   const { data: projectsData, isLoading: isLoadingProjects } = useProjects();
   const { data: expData, isLoading: isLoadingExp } = useExperiences();
+  const { data: achievementsData, isLoading: isLoadingAchievements } = useAchievements();
 
   // Use API data if available and not empty, otherwise fallback for visual presentation
   const projects = projectsData?.length ? projectsData : FALLBACK_PROJECTS;
   const experiences = expData?.length ? expData : FALLBACK_EXPERIENCES;
+  const achievements = achievementsData || [];
 
   return (
     <main className="bg-background min-h-screen text-foreground">
@@ -226,6 +229,29 @@ export default function Home() {
               <div className="space-y-8 text-center animate-pulse text-white/50">Loading timeline...</div>
             ) : (
               <ExperienceTimeline experiences={experiences} />
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Achievements Section */}
+      <section id="achievements" className="py-24 relative z-10 bg-secondary/20">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHeading title="Achievements and Hackathons" subtitle="Milestones" alignment="left" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+            {isLoadingAchievements ? (
+              Array(3).fill(0).map((_, i) => (
+                <div key={i} className="h-40 rounded-2xl glass-panel animate-pulse" />
+              ))
+            ) : achievements.length > 0 ? (
+              achievements.map((achievement, i) => (
+                <AchievementCard key={achievement.id} achievement={achievement} index={i} />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12 glass-panel rounded-2xl border-white/5">
+                <p className="text-muted-foreground">No achievements found in storage.</p>
+              </div>
             )}
           </div>
         </div>

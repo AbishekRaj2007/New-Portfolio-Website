@@ -23,7 +23,8 @@ export const achievementSchema = z.object({
   id: z.number(),
   title: z.string(),
   description: z.string(),
-  date: z.string(),
+  year: z.string(),
+  link: z.string().nullable().optional(),
 });
 
 export const messageSchema = z.object({
