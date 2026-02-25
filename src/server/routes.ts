@@ -2,6 +2,7 @@ import type { Express } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
+import { sendContactEmail } from "./email";
 import { z } from "zod";
 
 export async function registerRoutes(
@@ -27,6 +28,7 @@ export async function registerRoutes(
     try {
       const input = api.messages.create.input.parse(req.body);
       await storage.createMessage(input);
+      await sendContactEmail(input.name, input.email, input.message);
       res.status(201).json({ success: true });
     } catch (err) {
       if (err instanceof z.ZodError) {
