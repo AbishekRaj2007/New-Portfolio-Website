@@ -7,7 +7,32 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ContactForm } from "@/components/ContactForm";
 import { CursorGlow } from "@/components/CursorGlow";
+import { ImageGallery } from "@/components/ImageGallery";
 import { useProjects, useExperiences } from "@/hooks/use-portfolio";
+import {
+  SiJavascript, SiTypescript, SiReact, SiNextdotjs,
+  SiNodedotjs, SiPython, SiPostgresql, SiTailwindcss,
+  SiGraphql, SiDocker, SiFramer, SiMongodb, SiExpress,
+  SiGit, SiGithub
+} from "react-icons/si";
+
+const SKILLS = [
+  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  { name: "React", icon: SiReact, color: "#61DAFB" },
+  { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
+  { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+  { name: "Python", icon: SiPython, color: "#3776AB" },
+  { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+  { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "GraphQL", icon: SiGraphql, color: "#E10098" },
+  { name: "Docker", icon: SiDocker, color: "#2496ED" },
+  { name: "Express", icon: SiExpress, color: "#FFFFFF" },
+  { name: "Framer", icon: SiFramer, color: "#0055FF" },
+  { name: "Git", icon: SiGit, color: "#F05032" },
+  { name: "GitHub", icon: SiGithub, color: "#FFFFFF" },
+];
 
 // Fallback data in case API is empty/loading for preview purposes
 const FALLBACK_PROJECTS = [
@@ -74,15 +99,16 @@ export default function Home() {
       <div className="hidden lg:block">
         <CursorGlow />
       </div>
-      
+
       <Navbar />
       <Hero />
+      <ImageGallery />
 
       {/* About & Skills Section */}
       <section id="about" className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading title="About Me" subtitle="Who I Am" alignment="center" />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-12">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -92,31 +118,71 @@ export default function Home() {
               className="text-lg text-muted-foreground space-y-6"
             >
               <p>
-                I'm a dedicated software engineer with a passion for building <span className="text-white font-medium">high-performance digital experiences</span>. Blending robust engineering with sharp aesthetic sensibilities, I strive to create products that are both functionally powerful and visually stunning.
+                I am a software engineering student with a strong foundation in <span className="text-white font-medium">data structures, algorithms, artificial intelligence and full-stack development</span>. With hands-on experience solving 500+ coding problems and building production-ready applications, I focus on writing efficient, scalable, and maintainable code.
               </p>
               <p>
-                My approach is rooted in <span className="text-neon font-medium">first-principles thinking</span>. Whether I'm designing complex system architectures, crafting pixel-perfect user interfaces, or integrating the latest LLM APIs, I focus on scalability, maintainability, and exceptional user experience.
+                My interests lie in <span className="text-neon font-medium">backend systems, AI-driven applications, and performance-focused web development</span>. I approach problem-solving with structured thinking and a strong emphasis on clean architecture and long-term scalability.
+              </p>
+              <p>
+                I am continuously improving my technical depth through real-world projects, hackathons, and competitive programming, with the goal of contributing meaningfully to high-impact engineering teams.
               </p>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial="hidden"
+              whileInView="show"
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
               className="grid grid-cols-2 sm:grid-cols-3 gap-4"
             >
-              {[
-                "JavaScript/TS", "React/Next.js", "Node.js", 
-                "Python", "PostgreSQL", "Tailwind CSS",
-                "Framer Motion", "GraphQL", "Docker"
-              ].map((skill, i) => (
-                <div 
-                  key={i} 
-                  className="glass-panel py-3 px-4 rounded-xl text-center text-sm font-mono font-medium text-white/90 hover:border-primary/50 hover:text-primary transition-colors cursor-default"
+              {SKILLS.map((skill, i) => (
+                <motion.div
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    show: { opacity: 1, scale: 1 }
+                  }}
+                  animate={{
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    y: {
+                      duration: 3 + Math.random() * 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.3
+                    }
+                  }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: `0 0 20px -5px ${skill.color}40`,
+                    transition: { duration: 0.2 }
+                  }}
+                  className="relative group glass-panel p-4 rounded-xl flex flex-col items-center justify-center gap-3 border-white/5 hover:border-white/20 transition-all duration-300 overflow-hidden cursor-default"
                 >
-                  {skill}
-                </div>
+                  {/* Glowing background gradient on hover */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+                    style={{ background: `radial-gradient(circle at center, ${skill.color}, transparent 70%)` }}
+                  />
+
+                  <skill.icon
+                    size={32}
+                    style={{ color: skill.color }}
+                    className="filter drop-shadow-sm group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all duration-300"
+                  />
+                  <span className="text-xs font-mono font-medium text-white/70 group-hover:text-white transition-colors">
+                    {skill.name}
+                  </span>
+                </motion.div>
               ))}
             </motion.div>
           </div>
@@ -127,7 +193,7 @@ export default function Home() {
       <section id="projects" className="py-24 relative z-10 bg-secondary/30 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading title="Featured Work" subtitle="Portfolio" />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {isLoadingProjects ? (
               // Skeletons
@@ -154,7 +220,7 @@ export default function Home() {
       <section id="experience" className="py-24 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
           <SectionHeading title="Experience" subtitle="Career Path" alignment="center" />
-          
+
           <div className="mt-16">
             {isLoadingExp ? (
               <div className="space-y-8 text-center animate-pulse text-white/50">Loading timeline...</div>
@@ -169,7 +235,7 @@ export default function Home() {
       <section id="contact" className="py-24 relative z-10 overflow-hidden">
         {/* Abstract shapes */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none translate-x-1/2 -translate-y-1/2" />
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
             <div className="lg:col-span-2">
@@ -177,7 +243,7 @@ export default function Home() {
               <p className="text-muted-foreground text-lg mb-10">
                 I'm currently available for freelance projects and open to exciting full-time opportunities. Let's discuss how I can help your team achieve its goals.
               </p>
-              
+
               <div className="space-y-6">
                 <a href="mailto:hello@example.com" className="flex items-center gap-4 text-white hover:text-primary transition-colors group">
                   <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center group-hover:border-primary/40">
