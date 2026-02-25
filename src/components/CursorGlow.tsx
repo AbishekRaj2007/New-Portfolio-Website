@@ -1,53 +1,113 @@
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
 export function CursorGlow() {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
 
-  // Smooth out the movement
-  const springConfig = { damping: 25, stiffness: 200, mass: 1 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  // Smooth lag for the outer ring
+  const springConfig = { damping: 30, stiffness: 250, mass: 0.8 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 150); // Offset by half the width/height to center
-      cursorY.set(e.clientY - 150);
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseDown = () => setIsMouseDown(true);
+    const handleMouseUp = () => setIsMouseDown(false);
 
-    window.addEventListener("mousemove", moveCursor);
-    document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("mouseenter", handleMouseEnter);
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isClickable =
+        target.tagName === 'A' ||
+        target.tagName === 'BUTTON' ||
+        target.closest('a') ||
+        target.closest('button') ||
+        target.classList.contains('cursor-pointer');
+
+      setIsHovered(!!isClickable);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
-      window.removeEventListener("mousemove", moveCursor);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mouseenter", handleMouseEnter);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [cursorX, cursorY, isVisible]);
+  }, [isVisible]);
 
   return (
-    <motion.div
-      className="pointer-events-none fixed inset-0 z-50 mix-blend-screen overflow-hidden"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transition: "opacity 0.3s ease",
-      }}
-    >
+    <>
+      {/* 1. The Large Background Radial Glow (Follows with heavy lag) */}
       <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full blur-[100px]"
+        className="pointer-events-none fixed inset-0 z-40 mix-blend-screen"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          background: "radial-gradient(circle, hsla(111, 100%, 54%, 0.15) 0%, transparent 70%)",
+          opacity: isVisible ? 1 : 0,
         }}
-      />
-    </motion.div>
+      >
+        <motion.div
+          className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
+          style={{
+            x: useSpring(mouseX, { damping: 50, stiffness: 100 }),
+            y: useSpring(mouseY, { damping: 50, stiffness: 100 }),
+            translateX: "-50%",
+            translateY: "-50%",
+            background: "radial-gradient(circle, hsla(111, 100%, 54%, 0.1) 0%, transparent 70%)",
+          }}
+        />
+      </motion.div>
+
+      {/* 2. The Custom Interactive Cursor */}
+      <div className="hidden lg:block">
+        {/* Outer Ring */}
+        <motion.div
+          className="pointer-events-none fixed top-0 left-0 w-10 h-10 border border-primary/50 rounded-full z-[9999]"
+          style={{
+            x: smoothX,
+            y: smoothY,
+            translateX: "-50%",
+            translateY: "-50%",
+            scale: isHovered ? 2 : isMouseDown ? 0.8 : 1,
+            backgroundColor: isHovered ? "hsla(111, 100%, 54%, 0.1)" : "transparent",
+          }}
+          transition={{ type: "spring", damping: 20, stiffness: 300, mass: 0.5 }}
+        />
+
+        {/* Inner Dot */}
+        <motion.div
+          className="pointer-events-none fixed top-0 left-0 w-1.5 h-1.5 bg-primary rounded-full z-[9999]"
+          style={{
+            x: mouseX,
+            y: mouseY,
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        >
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 4, opacity: 0.3 }}
+                exit={{ scale: 0, opacity: 0 }}
+                className="absolute inset-0 bg-primary rounded-full"
+              />
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </>
   );
 }

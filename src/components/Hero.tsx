@@ -1,19 +1,97 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Terminal } from "lucide-react";
 import CountUp from "react-countup";
+import { useEffect, useState, useMemo } from "react";
+
+function BackgroundParticles() {
+  const particles = useMemo(() => {
+    return Array.from({ length: 40 }).map((_, i) => ({
+      id: i,
+      size: Math.random() * 3 + 1,
+      x: Math.random() * 100,
+      duration: 15 + Math.random() * 20,
+      delay: Math.random() * 10,
+    }));
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full bg-primary/30 blur-[1px]"
+          animate={{
+            y: ["110vh", "-10vh"],
+            opacity: [0, 0.7, 0],
+            x: [`${p.x}%`, `${p.x + (Math.random() - 0.5) * 15}%`],
+          }}
+          transition={{
+            duration: p.duration,
+            repeat: Infinity,
+            delay: -p.delay, // Use negative delay to start them in middle of animation
+            ease: "linear",
+          }}
+          style={{
+            width: p.size,
+            height: p.size,
+            left: `${p.x}%`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export function Hero() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-      
-      {/* Background glowing orbs */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-[#050808]">
+      {/* 1. Animated Background Grid */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+
+      {/* 2. Floating Particles */}
+      <BackgroundParticles />
+
+      {/* 3. Background glowing orbs - Now Animated */}
+      <motion.div
+        animate={{
+          scale: [1, 1.4, 1],
+          opacity: [0.2, 0.4, 0.2],
+          x: [0, 80, 0],
+          y: [0, -50, 0]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-primary/30 rounded-full blur-[130px] mix-blend-screen pointer-events-none"
+      />
+
+      <motion.div
+        animate={{
+          scale: [1.3, 1, 1.3],
+          opacity: [0.15, 0.3, 0.15],
+          x: [0, -60, 0],
+          y: [0, 70, 0]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-1/4 left-1/4 w-[700px] h-[700px] bg-blue-500/15 rounded-full blur-[160px] mix-blend-screen pointer-events-none"
+      />
+
+      {/* 4. Center Vignette */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
+
         {/* Left Content */}
         <div>
           <motion.div
@@ -101,9 +179,15 @@ export function Hero() {
         {/* Right Content - Abstract Visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="hidden lg:flex justify-center relative"
+          animate={{
+            opacity: 1,
+            scale: 1,
+            rotateX: mousePos.y,
+            rotateY: -mousePos.x,
+          }}
+          transition={{ duration: 0.8, delay: 0.4, rotateX: { duration: 0.1 }, rotateY: { duration: 0.1 } }}
+          className="hidden lg:flex justify-center relative perspective-1000"
+          style={{ transformStyle: "preserve-3d" }}
         >
           <div className="relative w-[500px] h-[600px] glass-panel rounded-3xl border-primary/20 overflow-hidden group">
             {/* Terminal mock */}
@@ -118,7 +202,7 @@ export function Hero() {
             <div className="mt-16 p-6 font-mono text-sm leading-relaxed">
               <p className="text-primary mb-2">$ hire --developer="ar" --skills="ml,fullstack,cloud"</p>
               <p className="text-muted-foreground mb-4">{">"} validating skills...</p>
-              
+
               <div className="space-y-2">
                 {[
                   "[OK] 500+ DSA problems solved",
@@ -141,7 +225,7 @@ export function Hero() {
                   </motion.p>
                 ))}
               </div>
-              
+
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 0] }}
@@ -149,7 +233,7 @@ export function Hero() {
                 className="w-3 h-5 bg-primary mt-4"
               />
             </div>
-            
+
             {/* Overlay gradient for depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
           </div>
