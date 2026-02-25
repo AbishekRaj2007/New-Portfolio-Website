@@ -66,6 +66,26 @@ const FALLBACK_PROJECTS = [
     liveDemoUrl: "#",
     githubUrl: "https://github.com/AbishekRaj2007/ResQ-Desk",
     featured: true,
+  },
+  {
+    id: 4,
+    title: "Fake News Detector",
+    description: "A Machine Learning-based application to detect whether a news article is real or fake using natural language processing (NLP).",
+    imageUrl: "/project4.png",
+    techStack: ["Scikit-Learn", "Pandas", "Numpy", "Python", "Streamlit"],
+    liveDemoUrl: "#",
+    githubUrl: "https://github.com/AbishekRaj2007/Fake-News-Detector",
+    featured: true,
+  },
+  {
+    id: 5,
+    title: "Post-Dost",
+    description: "AI social post idea generator for Indian small businesses.Culturally-aware AI-like flows for captions & placeholder images with lightweight JWT auth.",
+    imageUrl: "/project5.jpeg",
+    techStack: ["Next.js", "TypeScript", "Tailwind", "Gemini AI", "JWT", "Stability AI"],
+    liveDemoUrl: "#",
+    githubUrl: "https://github.com/AbishekRaj2007/post-dost",
+    featured: true,
   }
 ];
 
@@ -83,6 +103,13 @@ const FALLBACK_EXPERIENCES = [
     role: "AIML Virtual Internship",
     period: "May 2025 - June 2025",
     description: "Implemented supervised learning models using real-world datasets, improving understanding of data preprocessing, feature engineering, and performance optimization."
+  },
+  {
+    id: 3,
+    company: "BSAP inc.",
+    role: "AI Engineer Intern",
+    period: "January 2026 - March 2026",
+    description: "Assisted in training and fine-tuning supervised learning models, applying validation techniques to optimize accuracy and reduce overfitting."
   }
 ];
 
@@ -107,7 +134,21 @@ const FALLBACK_ACHIEVEMENTS = [
     description: "Finalists in the Hackathon organized by IIT Bombay",
     year: "2025",
     link: ""
-  }
+  },
+  {
+    id: 4,
+    title: "BuidL CTC",
+    description: "Presented a Blockchain based solution for gig workers",
+    year: "2025",
+    link: ""
+  },
+  {
+    id: 5,
+    title: "NextGen Hackathon",
+    description: "Finalists in the Hackathon organized by startup TN, Logitech and Hackcultue",
+    year: "2026",
+    link: ""
+  },
 ];
 
 export default function Home() {
