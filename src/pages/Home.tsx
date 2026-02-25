@@ -39,50 +39,74 @@ const SKILLS = [
 const FALLBACK_PROJECTS = [
   {
     id: 1,
-    title: "Nexus AI Platform",
-    description: "An enterprise-grade AI analytics dashboard providing real-time insights with natural language querying capabilities.",
-    imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
-    techStack: ["React", "TypeScript", "Python", "TensorFlow"],
-    githubUrl: "#",
+    title: "Certi-Chain",
+    description: "CertiChain is a blockchain-powered platform for issuing and verifying digital certificates with enhanced security and transparency.",
+    imageUrl: "/project1.png",
+    techStack: ["React", "TypeScript", "Tailwind", "Solidity", "Ether.js", "Hardhat"],
     liveDemoUrl: "#",
-    featured: true
+    githubUrl: "https://github.com/AbishekRaj2007/CertiChain",
+    featured: true,
   },
   {
     id: 2,
-    title: "Vanguard FinTech App",
-    description: "A secure, high-performance decentralized finance application for cross-border transactions and crypto portfolio management.",
-    imageUrl: "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?w=800&h=600&fit=crop",
-    techStack: ["Next.js", "Solidity", "Tailwind", "PostgreSQL"],
-    githubUrl: "#",
+    title: "RepoScribe",
+    description: "RepoScribe is an intelligent README generator that automatically creates clear, professional documentation for GitHub repositories.",
+    imageUrl: "/project2.png",
+    techStack: ["React", "TypeScript", "Tailwind", "Groq", "Python"],
     liveDemoUrl: "#",
-    featured: true
+    githubUrl: "https://github.com/AbishekRaj2007/RepoScribe-AI",
+    featured: true,
   },
   {
     id: 3,
-    title: "Lumina E-Commerce",
-    description: "A headless e-commerce storefront with AR product preview, sub-second page loads, and highly optimized conversion funnels.",
-    imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-    techStack: ["Vue.js", "Stripe", "GraphQL", "Framer Motion"],
-    githubUrl: "#",
-    liveDemoUrl: null,
-    featured: false
+    title: "ResQ-Desk",
+    description: "ResQ-Desk: transforming 911 calls into instant tactical actions using Generative AI. Listen. Analyze. Dispatch.",
+    imageUrl: "/project3.png",
+    techStack: ["React", "TypeScript", "Tailwind", "AWS Bedrock", "AWS IAM", "AWS S3"],
+    liveDemoUrl: "#",
+    githubUrl: "https://github.com/AbishekRaj2007/ResQ-Desk",
+    featured: true,
   }
 ];
 
 const FALLBACK_EXPERIENCES = [
   {
     id: 1,
-    company: "TechNova Solutions",
-    role: "Senior Frontend Engineer",
-    period: "2021 - Present",
-    description: "Leading the frontend architecture for high-traffic SaaS products. Mentoring junior developers and establishing internal UI component libraries used across 5+ teams."
+    company: "Chennai Institute of Technology",
+    role: "B.E Computer Science and Engineering",
+    period: "2024-2028",
+    description: "Strengthened problem-solving skills by solving 500+ data structures and algorithms problems, improving coding efficiency and optimization strategies."
   },
   {
     id: 2,
-    company: "Quantum Startup",
-    role: "Fullstack Developer",
-    period: "2019 - 2021",
-    description: "Built scalable MVPs from scratch to series A. Implemented real-time collaborative features using WebSockets and optimized database queries."
+    company: "Google for Developers",
+    role: "AIML Virtual Internship",
+    period: "May 2025 - June 2025",
+    description: "Implemented supervised learning models using real-world datasets, improving understanding of data preprocessing, feature engineering, and performance optimization."
+  }
+];
+
+const FALLBACK_ACHIEVEMENTS = [
+  {
+    id: 1,
+    title: "VisionX Hackathon",
+    description: "Secured 2nd runner up at the VisionX Hackathon for developing an innovative solution that addresses real-world challenges through technology.",
+    year: "2025",
+    link: ""
+  },
+  {
+    id: 2,
+    title: "Leetcode",
+    description: "Solved 500+ problems and 1800+ rating on LeetCode",
+    year: "2026",
+    link: ""
+  },
+  {
+    id: 3,
+    title: "AWS ImpactX Challenge",
+    description: "Finalists in the Hackathon organized by IIT Bombay",
+    year: "2025",
+    link: ""
   }
 ];
 
@@ -94,7 +118,7 @@ export default function Home() {
   // Use API data if available and not empty, otherwise fallback for visual presentation
   const projects = projectsData?.length ? projectsData : FALLBACK_PROJECTS;
   const experiences = expData?.length ? expData : FALLBACK_EXPERIENCES;
-  const achievements = achievementsData || [];
+  const achievements = achievementsData?.length ? achievementsData : FALLBACK_ACHIEVEMENTS;
 
   return (
     <main className="bg-background min-h-screen text-foreground">

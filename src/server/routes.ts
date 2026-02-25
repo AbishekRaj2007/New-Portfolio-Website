@@ -9,6 +9,15 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  // Add middleware to disable caching for all API routes
+  app.use("/api", (req, res, next) => {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    res.setHeader("Surrogate-Control", "no-store");
+    next();
+  });
+
   app.get(api.projects.list.path, async (req, res) => {
     const data = await storage.getProjects();
     res.json(data);
