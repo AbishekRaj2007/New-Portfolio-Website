@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertMessageSchema, projects, experiences, achievements } from './schema';
+import { insertMessageSchema, projectSchema, experienceSchema, achievementSchema } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -17,7 +17,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/projects' as const,
       responses: {
-        200: z.array(z.custom<typeof projects.$inferSelect>()),
+        200: z.array(projectSchema),
       },
     },
   },
@@ -26,7 +26,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/experiences' as const,
       responses: {
-        200: z.array(z.custom<typeof experiences.$inferSelect>()),
+        200: z.array(experienceSchema),
       },
     },
   },
@@ -35,7 +35,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/achievements' as const,
       responses: {
-        200: z.array(z.custom<typeof achievements.$inferSelect>()),
+        200: z.array(achievementSchema),
       },
     },
   },
