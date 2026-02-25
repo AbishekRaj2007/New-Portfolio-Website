@@ -271,28 +271,28 @@ export default function Home() {
               </p>
 
               <div className="space-y-6">
-                <a href="mailto:hello@example.com" className="flex items-center gap-4 text-white hover:text-primary transition-colors group">
+                <a href="mailto:rrabishekraj2007@gmail.com" className="flex items-center gap-4 text-white hover:text-primary transition-colors group">
                   <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center group-hover:border-primary/40">
                     <Mail size={20} className="text-primary" />
                   </div>
-                  <span className="font-medium text-lg">hello@example.com</span>
+                  <span className="font-medium text-lg">rrabishekraj2007@gmail.com</span>
                 </a>
                 <div className="flex items-center gap-4 text-white">
                   <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center">
                     <MapPin size={20} className="text-primary" />
                   </div>
-                  <span className="font-medium text-lg">San Francisco, CA</span>
+                  <span className="font-medium text-lg">Chennai, Tamil Nadu</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-4 mt-12">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-primary flex items-center justify-center text-white hover:text-background transition-all duration-300">
+                <a href="https://github.com/AbishekRaj2007" className="w-10 h-10 rounded-full bg-white/5 hover:bg-primary flex items-center justify-center text-white hover:text-background transition-all duration-300">
                   <GithubIcon size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-primary flex items-center justify-center text-white hover:text-background transition-all duration-300">
+                <a href="https://www.linkedin.com/in/abishek-raj-a2aa39318/" className="w-10 h-10 rounded-full bg-white/5 hover:bg-primary flex items-center justify-center text-white hover:text-background transition-all duration-300">
                   <Linkedin size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-primary flex items-center justify-center text-white hover:text-background transition-all duration-300">
+                <a href="https://x.com/AbishekRaj40608" className="w-10 h-10 rounded-full bg-white/5 hover:bg-primary flex items-center justify-center text-white hover:text-background transition-all duration-300">
                   <Twitter size={18} />
                 </a>
               </div>
@@ -308,7 +308,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-8 border-t border-white/5 bg-background text-center relative z-10">
         <p className="text-muted-foreground text-sm font-mono">
-          &copy; {new Date().getFullYear()} Designed & Built with <span className="text-primary">Neon</span>
+          &copy; {new Date().getFullYear()} Designed & Built by <span className="text-primary">Abishek Raj</span>
         </p>
       </footer>
     </main>

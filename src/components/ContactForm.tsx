@@ -46,7 +46,7 @@ export function ContactForm() {
               {...register("name")}
               id="name"
               type="text"
-              placeholder="John Doe"
+              placeholder="Your Name"
               className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
             />
             {errors.name && <p className="text-destructive text-xs mt-1">{errors.name.message}</p>}
@@ -58,7 +58,7 @@ export function ContactForm() {
               {...register("email")}
               id="email"
               type="email"
-              placeholder="john@example.com"
+              placeholder="Your Email"
               className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
             />
             {errors.email && <p className="text-destructive text-xs mt-1">{errors.email.message}</p>}
